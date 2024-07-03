@@ -1,4 +1,4 @@
-const { Stack, Fn } = require("aws-cdk-lib");
+const { Stack, Fn, CfnOutput } = require("aws-cdk-lib");
 const { Runtime, Code, Function } = require("aws-cdk-lib/aws-lambda");
 const {
   RestApi,
@@ -42,7 +42,7 @@ class ApiStack extends Stack {
           `https://\${${apiLogicalId}}.execute-api.\${AWS::Region}.amazonaws.com/${props.stageName}/restaurants`
         ),
         cognito_user_pool_id: props.cognitoUserPool.userPoolId,
-        cognito_client_id: props.webUserPoolClient.userPoolClientId
+        cognito_client_id: props.webUserPoolClient.userPoolClientId,
       },
     });
 
@@ -68,15 +68,6 @@ class ApiStack extends Stack {
     });
     props.restaurantsTable.grantReadData(searchRestaurantsFunction);
 
-    const cognitoAuthorizer = new CfnAuthorizer(this, 'CognitoAuthorizer', {
-      name: 'CognitoAuthorizer',
-      type: 'COGNITO_USER_POOLS',
-      identitySource: 'method.request.header.Authorization',
-      providerArns: [props.cognitoUserPool.userPoolArn],
-      restApiId: api.restApiId,
-    })
-
-
     const getIndexLambdaIntegration = new LambdaIntegration(getIndexFunction);
     const getRestaurantsLambdaIntegration = new LambdaIntegration(
       getRestaurantsFunction
@@ -85,9 +76,16 @@ class ApiStack extends Stack {
       searchRestaurantsFunction
     );
 
+    const cognitoAuthorizer = new CfnAuthorizer(this, "CognitoAuthorizer", {
+      name: "CognitoAuthorizer",
+      type: "COGNITO_USER_POOLS",
+      identitySource: "method.request.header.Authorization",
+      providerArns: [props.cognitoUserPool.userPoolArn],
+      restApiId: api.restApiId,
+    });
+
     api.root.addMethod("GET", getIndexLambdaIntegration);
     const restaurantsResource = api.root.addResource("restaurants");
-
     restaurantsResource.addMethod("GET", getRestaurantsLambdaIntegration, {
       authorizationType: AuthorizationType.IAM,
     });
@@ -96,8 +94,8 @@ class ApiStack extends Stack {
       .addMethod("POST", searchRestaurantsLambdaIntegration, {
         authorizationType: AuthorizationType.COGNITO,
         authorizer: {
-          authorizerId: cognitoAuthorizer.ref
-        }
+          authorizerId: cognitoAuthorizer.ref,
+        },
       });
 
     const apiInvokePolicy = new PolicyStatement({
@@ -110,6 +108,12 @@ class ApiStack extends Stack {
       ],
     });
     getIndexFunction.role?.addToPrincipalPolicy(apiInvokePolicy);
+
+    new CfnOutput(this, "ApiUrl", {
+      value: api.url,
+    });
+
+
   }
 }
 
