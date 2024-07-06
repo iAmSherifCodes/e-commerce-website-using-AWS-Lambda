@@ -7,7 +7,7 @@
   "scripts": {
     "build": "echo \"The build step is not required when using JavaScript!\" && exit 0",
     "cdk": "cdk",
-    "test": "cross-env TEST_MODE=http jest",
+    "test": "cross-env TEST_MODE=handler jest",
     "test:e2e": "cross-env TEST_MODE=http jest"
   },
   "devDependencies": {
@@ -23,6 +23,9 @@
     "jest": "^29.7.0"
   },
   "dependencies": {
+    "@aws-sdk/client-ssm": "^3.609.0",
+    "@middy/core": "^4.7.0",
+    "@middy/ssm": "^4.7.0",
     "aws-cdk-lib": "2.144.0",
     "aws4": "^1.13.0",
     "axios": "^1.7.2",
