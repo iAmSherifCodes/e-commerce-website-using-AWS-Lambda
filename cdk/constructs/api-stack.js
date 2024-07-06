@@ -51,7 +51,8 @@ class ApiStack extends Stack {
       handler: "get-restaurants.handler",
       code: Code.fromAsset("functions"),
       environment: {
-        default_results: "8",
+        service_name: props.serviceName,
+        stage_name: props.stageName,
         restaurants_table: props.restaurantsTable.tableName,
       },
     });
@@ -62,7 +63,8 @@ class ApiStack extends Stack {
       handler: "search-restaurants.handler",
       code: Code.fromAsset("functions"),
       environment: {
-        default_results: "8",
+        stage_name: props.stageName,
+        service_name: props.serviceName,
         restaurants_table: props.restaurantsTable.tableName,
       },
     });
