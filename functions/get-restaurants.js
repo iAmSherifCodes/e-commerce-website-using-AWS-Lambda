@@ -4,6 +4,8 @@ const dynamodbClient = new DynamoDB()
 const dynamodb = DynamoDBDocumentClient.from(dynamodbClient)
 const middy = require('@middy/core')
 const ssm = require('@middy/ssm')
+const middyCacheEnabled = JSON.parse(process.env.middy_cache_enabled)
+const middyCacheExpiry = parseInt(process.env.middy_cache_expiry_milliseconds)
 
 const { service_name, stage_name } = process.env
 const tableName = process.env.restaurants_table
