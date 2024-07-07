@@ -31,8 +31,8 @@ module.exports.handler = middy(async (event, context) => {
 
   return response
 }).use(ssm({
-  cache: true,
-  cacheExpiry: 1 * 60 * 1000, // 1 mins
+  cache: middyCacheEnabled,
+  cacheExpiry: middyCacheExpiry,
   setToContext: true,
   fetchData: {
     config: `/${service_name}/${stage_name}/get-restaurants/config`
