@@ -7,16 +7,23 @@ const { CognitoStack } = require('./constructs/cognito-stack')
 
 const app = new cdk.App()
 let stageName = app.node.tryGetContext('stageName')
+let ssmStageName = app.node.tryGetContext('ssmStageName')
 
 if (!stageName) {
   console.log('Defaulting stage name to dev')
   stageName = 'dev'
 }
 
+if (!ssmStageName) {
+  console.log(`Defaulting SSM stage name to "stageName": ${stageName}`)
+  ssmStageName = stageName
+}
+
 const dbStack = new DatabaseStack(app, `DatabaseStack-${stageName}`, { stageName })
 const cognitoStack = new CognitoStack(app, `CognitoStack-${stageName}`, { stageName })
 new ApiStack(app, `ApiStack-${stageName}`, { 
   stageName,
+  ssmStageName,
   serviceName: 'workshop-sherif',
   restaurantsTable: dbStack.restaurantsTable,
   cognitoUserPool: cognitoStack.cognitoUserPool,
