@@ -81,7 +81,8 @@ class ApiStack extends Stack {
         effect: Effect.ALLOW,
         actions: ['ssm:GetParameters*'],
         resources: [
-          Fn.sub(`arn:aws:ssm:\${AWS::Region}:\${AWS::AccountId}:parameter/${props.serviceName}/${props.ssmStageName}/search-restaurants/config`)
+          Fn.sub(`arn:aws:ssm:\${AWS::Region}:\${AWS::AccountId}:parameter/${props.serviceName}/${props.ssmStageName}/search-restaurants/config`),
+          Fn.sub(`arn:aws:ssm:\${AWS::Region}:\${AWS::AccountId}:parameter/${props.serviceName}/${props.ssmStageName}/search-restaurants/secretString`)
         ]
       })
     )
