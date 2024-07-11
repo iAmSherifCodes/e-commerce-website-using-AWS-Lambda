@@ -91,6 +91,15 @@ class ApiStack extends Stack {
         ]
       })
     )
+    searchRestaurantsFunction.role.addToPrincipalPolicy(
+      new PolicyStatement({
+        effect: Effect.ALLOW,
+        actions: ['kms:Decrypt'],
+        resources: [
+          Fn.ref('KmsArnParameter')
+        ]
+      })
+    )
 
     const getIndexLambdaIntegration = new LambdaIntegration(getIndexFunction)
     const getRestaurantsLambdaIntegration = new LambdaIntegration(getRestaurantsFunction)
