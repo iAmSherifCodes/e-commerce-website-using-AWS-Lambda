@@ -32,4 +32,5 @@ new ApiStack(app, `ApiStack-${stageName}`, {
   cognitoUserPool: cognitoStack.cognitoUserPool,
   webUserPoolClient: cognitoStack.webUserPoolClient,
   serverUserPoolClient: cognitoStack.serverUserPoolClient,
+  orderEventBus: eventsStack.orderEventBus
 })
