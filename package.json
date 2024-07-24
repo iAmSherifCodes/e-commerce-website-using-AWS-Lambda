@@ -7,12 +7,13 @@
   "scripts": {
     "build": "echo \"The build step is not required when using JavaScript!\" && exit 0",
     "cdk": "cdk",
-    "test": "cross-env TEST_MODE=http jest",
+    "test": "cross-env TEST_MODE=handler jest",
     "test:e2e": "cross-env TEST_MODE=http jest"
   },
   "devDependencies": {
     "@aws-sdk/client-cognito-identity-provider": "^3.609.0",
     "@aws-sdk/client-dynamodb": "^3.592.0",
+    "@aws-sdk/client-eventbridge": "^3.617.0",
     "@aws-sdk/lib-dynamodb": "^3.592.0",
     "@types/jest": "^29.5.12",
     "aws-cdk": "2.144.0",
