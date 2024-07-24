@@ -41,7 +41,8 @@ class ApiStack extends Stack {
       environment: {
         restaurants_api: Fn.sub(`https://\${${apiLogicalId}}.execute-api.\${AWS::Region}.amazonaws.com/${props.stageName}/restaurants`),
         cognito_user_pool_id: props.cognitoUserPool.userPoolId,
-        cognito_client_id: props.webUserPoolClient.userPoolClientId
+        cognito_client_id: props.webUserPoolClient.userPoolClientId,
+        orders_api: Fn.sub(`https://\${${apiLogicalId}}.execute-api.\${AWS::Region}.amazonaws.com/${props.stageName}/orders`)
       }
     })
 
@@ -101,9 +102,20 @@ class ApiStack extends Stack {
       })
     )
 
+    const placeOrderFunction = new NodejsFunction(this, 'PlaceOrder', {
+      runtime: Runtime.NODEJS_18_X,
+      handler: 'handler',
+      entry: 'functions/place-order.js',
+      environment: {
+        bus_name: props.orderEventBus.eventBusName
+      }
+    })
+    props.orderEventBus.grantPutEventsTo(placeOrderFunction)
+
     const getIndexLambdaIntegration = new LambdaIntegration(getIndexFunction)
     const getRestaurantsLambdaIntegration = new LambdaIntegration(getRestaurantsFunction)
     const searchRestaurantsLambdaIntegration = new LambdaIntegration(searchRestaurantsFunction)
+    const placeOrderLambdaIntegration = new LambdaIntegration(placeOrderFunction)
 
     const cognitoAuthorizer = new CfnAuthorizer(this, 'CognitoAuthorizer', {
       name: 'CognitoAuthorizer',
@@ -125,6 +137,13 @@ class ApiStack extends Stack {
           authorizerId: cognitoAuthorizer.ref
         }
       })
+    api.root.addResource('orders')
+        .addMethod('POST', placeOrderLambdaIntegration, {
+          authorizationType: AuthorizationType.COGNITO,
+          authorizer: {
+            authorizerId: cognitoAuthorizer.ref
+          }
+        })
 
     const apiInvokePolicy = new PolicyStatement({
       effect: Effect.ALLOW,
