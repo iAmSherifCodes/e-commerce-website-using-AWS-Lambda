@@ -14,6 +14,7 @@
     "@aws-sdk/client-cognito-identity-provider": "^3.609.0",
     "@aws-sdk/client-dynamodb": "^3.592.0",
     "@aws-sdk/client-eventbridge": "^3.617.0",
+    "@aws-sdk/client-sns": "^3.616.0",
     "@aws-sdk/lib-dynamodb": "^3.592.0",
     "@types/jest": "^29.5.12",
     "aws-cdk": "2.144.0",
