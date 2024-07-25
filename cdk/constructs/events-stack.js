@@ -25,17 +25,6 @@ class EventsStack extends Stack {
                 restaurant_notification_topic: restaurantNotificationTopic.topicArn
             }
         })
-        orderEventBus.grantPutEventsTo(notifyRestaurantFunction)
-        restaurantNotificationTopic.grantPublish(notifyRestaurantFunction)
-
-        const rule = new Rule(this, 'Rule', {
-            eventBus: orderEventBus,
-            eventPattern: {
-                source: ['big-mouth'],
-                detailType: ['order_placed'],
-            }
-        })
-        rule.addTarget(new LambdaFunction(notifyRestaurantFunction))
     }
 }
 
