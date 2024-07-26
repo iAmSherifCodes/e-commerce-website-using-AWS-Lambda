@@ -1,4 +1,4 @@
-const { Stack, CfnCondition, Duration, Fn } = require('aws-cdk-lib')
+const { Stack, CfnCondition, Duration, Fn, CfnOutput } = require('aws-cdk-lib')
 const { EventBus, Rule } = require('aws-cdk-lib/aws-events')
 const { LambdaFunction } = require('aws-cdk-lib/aws-events-targets')
 const { Topic, Subscription } = require('aws-cdk-lib/aws-sns')
@@ -69,6 +69,12 @@ class EventsStack extends Stack {
             rawMessageDelivery: false
         })
         subscription.node.defaultChild.cfnOptions.condition = condition
+
+        if (isE2eTest) {
+            new CfnOutput(this, 'E2eTestQueueUrl', {
+                value: testQueue.queueUrl
+            })
+        }
     }
 }
 
