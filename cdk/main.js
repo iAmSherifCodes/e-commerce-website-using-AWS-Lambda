@@ -23,7 +23,12 @@ if (!ssmStageName) {
 
 const dbStack = new DatabaseStack(app, `DatabaseStack-${stageName}`, { stageName })
 const cognitoStack = new CognitoStack(app, `CognitoStack-${stageName}`, { stageName })
-const eventsStack = new EventsStack(app, `EventStack-${stageName}`, {serviceName ,stageName, ssmStageName})
+const eventsStack = new EventsStack(app, `EventStack-${stageName}`, {
+  serviceName,
+  stageName,
+  ssmStageName,
+  idempotencyTable: dbStack.idempotencyTable,
+})
 new ApiStack(app, `ApiStack-${stageName}`, { 
   stageName,
   ssmStageName,
