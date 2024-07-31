@@ -6,3 +6,4 @@ cdk.out
 .env
 .env.local
 .env.events
+.idea/aws.xml
