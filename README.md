@@ -1,12 +1,15 @@
-# Welcome to your CDK JavaScript project
+# Welcome to your AWS CDK JavaScript project
 
-This is a blank project for CDK development with JavaScript.
+This e-commerce website flexes my ability to use Amazon Cognito, AWS Lambda, ApiGateway, CloudWatch, DynamoDB, and more.
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app. The build step is not required when using JavaScript.
 
-## Useful commands
+Use this link to play around with the UI- https://z9ju2de6k8.execute-api.us-east-1.amazonaws.com/dev/
+The website basically shows various products. You can search for a range of products by their theme, like "Harry Potter" or "Rick and Morty".
 
-* `npm run test`         perform the jest unit tests
-* `npx cdk deploy`       deploy this stack to your default AWS account/region
-* `npx cdk diff`         compare deployed stack with current state
-* `npx cdk synth`        emits the synthesized CloudFormation template
+## Application Overview
+- You must sign in to be authorized to search. This authentication is handled with Amazon Cognito.
+- CloudWatch for Log tracing and debugging.
+- Lambda for compute
+- ApiGateway for our RestFul APIs
+- DynamoDB, NoSql database.
+
