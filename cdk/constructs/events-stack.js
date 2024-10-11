@@ -75,6 +75,9 @@ class EventsStack extends Stack {
         if (isE2eTest) {
             this.declareTestResources(restaurantNotificationTopic, orderEventBus)
         }
+
+        this.restaurantNotificationTopic = restaurantNotificationTopic
+        this.userNotificationTopic = new Topic(this, 'UserNotificationTopic')
     }
 
     declareTestResources(restaurantNotificationTopic, orderEventBus) {
