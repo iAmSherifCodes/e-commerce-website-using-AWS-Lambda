@@ -3,7 +3,7 @@
 This e-commerce website flexes my ability to use Amazon Cognito, AWS Lambda, ApiGateway, CloudWatch, DynamoDB, and more.
 
 
-- Use this link to play around with the UI- https://z9ju2de6k8.execute-api.us-east-1.amazonaws.com/dev/
+- Use this link to play around with the UI- [here](https://mieiey4cu2.execute-api.us-east-1.amazonaws.com/dev/)
 - The website basically shows various products. You can search for a range of products by their theme, like "Harry Potter" or "Rick and Morty".
 
 ## Application Overview
