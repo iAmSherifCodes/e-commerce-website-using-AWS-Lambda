@@ -1,6 +1,6 @@
 # E-commerce website built with AWS CDK
 
-This e-commerce website flexes my ability to use Amazon Cognito, AWS Lambda, ApiGateway, CloudWatch, DynamoDB, and more.
+This e-commerce website flexes my ability to use Amazon Cognito, AWS Lambda, ApiGateway, CloudWatch, DynamoDB, EventBridge, SNS, SQS, IAM and more.
 
 
 - Use this link to play around with the UI- [here](https://mieiey4cu2.execute-api.us-east-1.amazonaws.com/dev/)
